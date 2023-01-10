@@ -4,10 +4,6 @@
 
 namespace NS{
 
-    enum lossFunction {
-         crossEntropyLoss
-    };
-
     class Network
     {
         friend std::ostream& operator<<(std::ostream& out, const Network& Network);
@@ -26,5 +22,4 @@ namespace NS{
             void activateNetwork(std::vector<double> t_input) const;
             void trainNetwork(std::vector<double> t_input, std::vector<double> t_output) const;
     };
-
 }

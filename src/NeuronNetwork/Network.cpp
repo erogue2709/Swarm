@@ -31,7 +31,7 @@ namespace NS{
     void Network::activateNetwork(std::vector<double> t_input) const {
         m_networkLayers[0]->activateLayer(t_input);
         for( int i=0; i<m_numberOfHiddenLayers; i++ ){
-            m_networkLayers[i+1]->activateLayer(m_networkLayers[i]->getLayerOutputs());
+            //m_networkLayers[i+1]->activateLayer(m_networkLayers[i]->getOutputs());
         }
     }
 
