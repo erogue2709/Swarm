@@ -22,9 +22,9 @@ namespace NS {
         m_layerOfNeurons.resize(m_numberOfOutputs);
         switch (m_activationType)
         {
-        case functionHeavisideNeuron:
+        case functionSigmoidNeuron:
             for(int i=0; i < m_numberOfOutputs; i++){
-                HeavisideNeuron* newNeuron = new HeavisideNeuron(m_numberOfInputs);
+                SigmoidNeuron* newNeuron = new SigmoidNeuron(m_numberOfInputs);
                 m_layerOfNeurons[i] = newNeuron;
             }
             break;

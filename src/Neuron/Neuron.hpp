@@ -3,7 +3,7 @@
 #include <vector>
 
 namespace NS{
-    
+
     class Neuron
     {
         friend std::ostream& operator<<(std::ostream& out, const Neuron& neuron);
@@ -36,5 +36,6 @@ namespace NS{
 
             
             virtual void activationFunction(std::vector<double> t_input) =0;
+            virtual double derivativeFunction() =0;
     };
 }

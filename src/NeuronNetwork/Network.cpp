@@ -34,4 +34,8 @@ namespace NS{
             m_networkLayers[i+1]->activateLayer(m_networkLayers[i]->getLayerOutputs());
         }
     }
+
+    void Network::trainNetwork(std::vector<double> t_input, std::vector<double> t_output) const{
+        //de la merde, reduit le scoop t'as pas besoin de tout ca pouir du swarm sigmo+meilleur traitement/mapping des données
+    }
 }
