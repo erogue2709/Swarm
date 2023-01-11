@@ -1,4 +1,5 @@
-NN/DNN implementation for simple Regression, Binary/Multi-Class Classification problems and RL.
+NN/DNN implementation for simple Regression, and possibly Binary/Multi-Class Classification problems,
+with goal to use this implementation for RL.
 
 
 Help from:

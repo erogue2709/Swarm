@@ -12,7 +12,8 @@ namespace NS{
             const unsigned int m_inputSize;
             const unsigned int m_outputSize;
             const unsigned int m_numberOfHiddenLayers;
-            NS::lossFunction m_lossFunction = MSE;
+            const double m_learningRate = 0.015; 
+            NS::lossFunction m_lossFunction = MSELoss;
             std::vector<Layer*> m_networkLayers;
         
         public:
@@ -23,7 +24,8 @@ namespace NS{
             , activationType t_outputLayer
             );
 
-            void activateNetwork(const std::vector<double> t_input) const;
-            void trainNetwork(std::vector<double> t_input, std::vector<double> t_output) const;
+            std::vector<double> activateNetwork(const std::vector<double> t_input) const;
+            void testLogicTrainning(std::vector<std::vector<double>> t_input
+                    , std::vector<std::vector<double>> t_intendedOutput) const;
     };
 }

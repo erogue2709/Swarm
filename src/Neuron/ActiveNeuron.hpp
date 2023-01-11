@@ -6,8 +6,11 @@ namespace NS {
 
     enum lossFunction {
         crossEntropyLoss,
-        MSE
+        MSELoss
     };
+
+    std::vector<double> MSEFunction(const std::vector<std::vector<double>> outputs
+            , const std::vector<std::vector<double>> intendedOutputs);
 
     enum activationType {
         functionSigmoidNeuron,

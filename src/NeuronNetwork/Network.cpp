@@ -20,15 +20,32 @@ namespace NS{
         m_networkLayers.push_back(new NS::Layer(m_inputSize, t_outputSize, t_outputLayer));
     }
 
-    void Network::activateNetwork(const std::vector<double> t_input) const {
+    std::vector<double> Network::activateNetwork(const std::vector<double> t_input) const {
         m_networkLayers[0]->activateLayer(t_input);
         for( int i=1; i < m_networkLayers.size() ; i++ ){
             m_networkLayers[i]->activateLayer(m_networkLayers[i-1]->getOutputs());
         }
+        return m_networkLayers.back()->getOutputs();
     }
 
-    void Network::trainNetwork(std::vector<double> t_input, std::vector<double> t_output) const{
-        //de la merde, reduit le scoop t'as pas besoin de tout ca pouir du swarm sigmo+meilleur traitement/mapping des données
+    void Network::testLogicTrainning(std::vector<std::vector<double>> t_inputs
+            , std::vector<std::vector<double>> t_intendedOutputs) const{
+        //batch trainning
+        //aim for 95% accruacy(?) because of the simplistic nature of this test
+        bool trainningDone = false;
+        std::vector<std::vector<double>> outputs;
+        while(!trainningDone){
+            trainningDone == true;
+            for(int k=0; k < t_inputs.size(); k++ ){
+                outputs.push_back(activateNetwork(t_inputs[k]));
+            }
+            for(auto k : NS::MSEFunction(outputs, t_intendedOutputs)){
+                trainningDone = (trainningDone && k <= 0.05)?true:false;
+            }
+            if(!trainningDone){
+
+            }
+        }
     }
 
     std::ostream& operator<<(std::ostream& out, const NS::Network& Network){
