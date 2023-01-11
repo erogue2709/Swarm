@@ -5,7 +5,8 @@
 namespace NS {
 
     enum lossFunction {
-        crossEntropyLoss
+        crossEntropyLoss,
+        MSE
     };
 
     enum activationType {
