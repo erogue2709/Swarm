@@ -23,9 +23,19 @@ namespace NS{
             , unsigned int t_outputSize
             , activationType t_outputLayer
             );
+            //change constructor to work only with t_inputSize
+            //make addLayer function
+            //is vurtial function for lossFunction better/faster
 
             std::vector<double> activateNetwork(const std::vector<double> t_input) const;
-            void testLogicTrainning(std::vector<std::vector<double>> t_input
+
+            void batchGDTrainning(std::vector<std::vector<double>> t_input
+                    , std::vector<std::vector<double>> t_intendedOutput) const;
+            
+            void miniBatchGDTrainning(std::vector<std::vector<double>> t_input
+                    , std::vector<std::vector<double>> t_intendedOutput) const;
+
+            void stochasticGDTrainning(std::vector<std::vector<double>> t_input
                     , std::vector<std::vector<double>> t_intendedOutput) const;
     };
 }

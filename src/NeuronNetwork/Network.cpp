@@ -28,7 +28,7 @@ namespace NS{
         return m_networkLayers.back()->getOutputs();
     }
 
-    void Network::testLogicTrainning(std::vector<std::vector<double>> t_inputs
+    void Network::batchGDTrainning(std::vector<std::vector<double>> t_inputs
             , std::vector<std::vector<double>> t_intendedOutputs) const{
         //batch trainning
         //aim for 95% accruacy(?) because of the simplistic nature of this test
