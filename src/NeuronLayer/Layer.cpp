@@ -9,8 +9,8 @@ namespace NS {
                 )
         : m_numberOfInputs  {t_numberOfInputs}
         , m_numberNeurons {t_numberOfNeurons}
-        , m_activationFunction  {t_activationFunction}{
-
+        , m_activationFunction  {t_activationFunction}
+    {
         m_bias.resize(m_numberNeurons, 1.0);
         m_outputs.resize(m_numberNeurons, 0.0);
         
@@ -29,9 +29,7 @@ namespace NS {
         std::vector<double> temp(m_weights.size());
         for(int k = 0; k < m_weights.size(); k++){
             temp[k] = std::inner_product(m_weights[k].begin(), m_weights[k].end(), t_input.begin(), 0.0)+m_bias[k];
-            std::cout << temp[k] << " ";
         }
-        std::cout << std::ends;
         m_outputs = NS::activeFunction(m_activationFunction, temp);
         return m_outputs;
     }

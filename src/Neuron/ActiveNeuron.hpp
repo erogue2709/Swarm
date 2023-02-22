@@ -24,4 +24,6 @@ namespace NS {
     std::vector<double> derivateSigmoid(const std::vector<double> output);
     std::vector<double> derivateReLu(const std::vector<double> output);
 
+    void NetworkTesting();
+
 }

@@ -4,34 +4,44 @@
 
 namespace NS{
 
-    Network::Network(unsigned int t_inputSize
-                , unsigned int t_numberOfHiddenLayers
-                , activationType t_hiddenLayers
-                , unsigned int t_outputSize
-                , activationType t_outputLayer
-                )
-            : m_inputSize {t_inputSize}
-            , m_outputSize {t_outputSize}
-            , m_numberOfHiddenLayers {t_numberOfHiddenLayers}
+    Network::Network(){};
+
+    void Network::addLayer(const unsigned int t_numberOfInputs
+                , const unsigned int t_numberOfNeurons
+                , const activationType t_activationFunction)
     {
-        for(int i=0; i<m_numberOfHiddenLayers; i++){
-            m_networkLayers.push_back(new NS::Layer(m_inputSize, m_inputSize, t_hiddenLayers));
+        if(t_numberOfInputs == 0 || t_numberOfNeurons == 0){
+            std::cout << "Incorrect value, unable to add layer" << std::endl;
+            return;
         }
-        m_networkLayers.push_back(new NS::Layer(m_inputSize, t_outputSize, t_outputLayer));
+        m_networkLayers.push_back(new NS::Layer(t_numberOfInputs, t_numberOfNeurons, t_activationFunction));
+    }
+
+    unsigned int Network::lastLayerSize(){
+        if(!m_networkLayers.empty()){
+            return m_networkLayers.back()->getNumberOfNeurons();
+        }
+        return 0;
     }
 
     std::vector<double> Network::activateNetwork(const std::vector<double> t_input) const {
-        m_networkLayers[0]->activateLayer(t_input);
-        for( int i=1; i < m_networkLayers.size() ; i++ ){
-            m_networkLayers[i]->activateLayer(m_networkLayers[i-1]->getOutputs());
+        if(!m_networkLayers.empty()){
+            if(m_networkLayers[0]->getNumberOfInputs() == t_input.size()){
+                m_networkLayers[0]->activateLayer(t_input);
+                for( int i=1; i < m_networkLayers.size() ; i++ ){
+                    m_networkLayers[i]->activateLayer(m_networkLayers[i-1]->getOutputs());
+                }
+            }else{
+                std::cout << "Incorrect input size, unable to activate network" << std::endl;
+            }
+            return m_networkLayers.back()->getOutputs();
         }
-        return m_networkLayers.back()->getOutputs();
+        std::cout << "Empty network, no activatiob possible" << std::endl;
+        return {};
     }
 
     void Network::batchGDTrainning(std::vector<std::vector<double>> t_inputs
             , std::vector<std::vector<double>> t_intendedOutputs) const{
-        //batch trainning
-        //aim for 95% accruacy(?) because of the simplistic nature of this test
         bool trainningDone = false;
         std::vector<std::vector<double>> outputs;
         while(!trainningDone){
