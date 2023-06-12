@@ -24,6 +24,8 @@ namespace NS{
 
             unsigned int lastLayerSize();
 
+            bool trainningDone();
+
             std::vector<double> activateNetwork(const std::vector<double> t_input) const;
 
             void batchGDTrainning(std::vector<std::vector<double>> t_input

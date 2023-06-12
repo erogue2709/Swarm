@@ -42,20 +42,17 @@ namespace NS{
 
     void Network::batchGDTrainning(std::vector<std::vector<double>> t_inputs
             , std::vector<std::vector<double>> t_intendedOutputs) const{
-        bool trainningDone = false;
+                
         std::vector<std::vector<double>> outputs;
-        while(!trainningDone){
-            trainningDone == true;
+        while(!trainningDone()){
             for(int k=0; k < t_inputs.size(); k++ ){
                 outputs.push_back(activateNetwork(t_inputs[k]));
             }
-            for(auto k : NS::MSEFunction(outputs, t_intendedOutputs)){
-                trainningDone = (trainningDone && k <= 0.05)?true:false;
-            }
-            if(!trainningDone){
-
-            }
         }
+    }
+
+    bool Network::trainningDone(){
+        return true;
     }
 
     std::ostream& operator<<(std::ostream& out, const NS::Network& Network){
