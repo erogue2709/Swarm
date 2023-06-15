@@ -1,6 +1,7 @@
 #include "..\NeuronLayer\Layer.hpp"
 #include "Network.hpp"
 #include <iostream>
+#include <chrono>
 
 namespace NS{
 
@@ -36,24 +37,44 @@ namespace NS{
             }
             return m_networkLayers.back()->getOutputs();
         }
-        std::cout << "Empty network, no activatiob possible" << std::endl;
+        std::cout << "Empty network, no activation possible" << std::endl;
         return {};
     }
 
     void Network::batchGDTrainning(std::vector<std::vector<double>> t_inputs
             , std::vector<std::vector<double>> t_intendedOutputs) const{
-                
-        std::vector<std::vector<double>> outputs;
-        while(!trainningDone()){
+        
+        std::vector<std::vector<double>> errors;
+        std::vector<std::vector<double>> trainningOutputs;
+
+        std::chrono::time_point beginningTime = std::chrono::steady_clock::now();
+
+        while( std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() - beginningTime) < std::chrono::seconds(m_trainningTime)  ){
             for(int k=0; k < t_inputs.size(); k++ ){
-                outputs.push_back(activateNetwork(t_inputs[k]));
+                trainningOutputs.push_back(activateNetwork(t_inputs[k]));
             }
+            errors = calculateError(trainningOutputs, t_intendedOutputs);
+            // for m_networkLayers do gradient descent
         }
     }
 
-    bool Network::trainningDone(){
-        return true;
+    std::vector<double> Network::calculateError(
+            std::vector<std::vector<double>> t_trainningOutputs
+            , std::vector<std::vector<double>> t_intendedOutputs){
+        
+        switch (m_lossFunction)
+        {
+        case crossEntropyLoss:
+            //horrible why do i do that :'(
+            return NS::MSEFunction(t_trainningOutputs, t_intendedOutputs);
+        case MSELoss:
+            return MSEFunction(t_trainningOutputs,t_intendedOutputs);
+            break;
+        }
     }
+        
+
+    //need function to validate network (mse -> 1 output for regression else crossentropy for classification)
 
     std::ostream& operator<<(std::ostream& out, const NS::Network& Network){
         for( auto k : Network.m_networkLayers ){

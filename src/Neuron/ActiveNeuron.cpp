@@ -4,16 +4,17 @@ namespace NS {
 
     std::vector<double> MSEFunction(const std::vector<std::vector<double>> outputs
             , const std::vector<std::vector<double>> intendedOutputs){
-        //MSE for batch gradiant descent
-        //change some std::vector<double> to double and sum results of fucntion
-        //call / wrap into other function to convert to stochastic gradient descent??
-        /*
-        std::vector<double> temp;
+        
+        double sqrtSum = 0.0; //normalize to avoid overflow?
+        std::vector<double> meanSqrtSum;
         
         for(int k=0; k < outputs.size(); k++){
-            temp[k] = (outputs[k]-intendedOutputs[k])*(outputs[k]-intendedOutputs[k]);
-        }*/
-        return outputs[0];
+            //Nope... need to loop every outputs for every neurons (1 in mse' case tho :/)
+            sqrtSum += (outputs[k][0]-intendedOutputs[k][0])*(outputs[k][0]-intendedOutputs[k][0]);
+        }
+        meanSqrtSum.push_back(sqrtSum/outputs.size());
+
+        return meanSqrtSum;
     }
 
     std::vector<double> activeFunction(const activationType function, const std::vector<double> input){
