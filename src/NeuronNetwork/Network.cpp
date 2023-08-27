@@ -31,7 +31,6 @@ namespace NS{
     void Network::batchGDTrainning(std::vector<std::vector<double>> t_inputs
             , std::vector<std::vector<double>> t_intendedOutputs) const{
         //batch trainning
-        //aim for 95% accruacy(?) because of the simplistic nature of this test
         bool trainningDone = false;
         std::vector<std::vector<double>> outputs;
         while(!trainningDone){

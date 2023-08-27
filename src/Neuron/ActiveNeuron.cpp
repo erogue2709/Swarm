@@ -7,13 +7,14 @@ namespace NS {
         //MSE for batch gradiant descent
         //change some std::vector<double> to double and sum results of fucntion
         //call / wrap into other function to convert to stochastic gradient descent??
-        std::vector<double> temp();
+        std::vector<double> temp;
         /*
         for(int k=0; k < outputs.size(); k++){
             temp[k] = (outputs[k]-intendedOutputs[k])*(outputs[k]-intendedOutputs[k]);
         }
         return (temp/outputs.size());
         */
+       return temp;
     }
 
     std::vector<double> activeFunction(const activationType function, const std::vector<double> input){
