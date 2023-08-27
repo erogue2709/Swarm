@@ -12,7 +12,11 @@ int main(){
     sliceOfBrain.showLayer();
 
     std::cout << "smolBrain" << std::endl;
-    NS::Network smolBrain = NS::Network(input.size(), 2, NS::functionSigmoidNeuron, 1, NS::functionSigmoidNeuron);
+    NS::Network smolBrain = NS::Network();
+    smolBrain.addLayer(input.size(),input.size(),NS::functionSigmoidNeuron);
+    smolBrain.addLayer(smolBrain.lastLayerSize(),30,NS::functionSigmoidNeuron);
+    smolBrain.addLayer(smolBrain.lastLayerSize(),30,NS::functionSigmoidNeuron);
+    smolBrain.addLayer(smolBrain.lastLayerSize(),2,NS::functionSigmoidNeuron);
     smolBrain.activateNetwork(input);
     std::cout << smolBrain << std::endl;
 
