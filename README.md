@@ -18,3 +18,6 @@ https://peterroelants.github.io/posts/cross-entropy-logistic/
 
 https://www.v7labs.com/blog/neural-networks-activation-functions
 https://www.v7labs.com/blog/recurrent-neural-networks-guide
+
+.gitignore
+https://github.com/github/gitignore/blob/main/C%2B%2B.gitignore
