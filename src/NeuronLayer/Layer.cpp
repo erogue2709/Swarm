@@ -8,6 +8,12 @@ namespace NS {
         return out;
     }
 
+    void setWeights(const std::vector<std::vector<double>> t_Weights){
+        for(int k = 0; k < m_weights.size(); k++){
+            m_weights[k] = t_Weights[k];
+        }
+    }
+
     Layer::Layer(const unsigned int t_numberOfInputs , const unsigned int t_numberOfNeurons , const activationType t_activationFunction )
         : m_numberOfInputs  {t_numberOfInputs}
         , m_numberOfNeurons {t_numberOfNeurons}
@@ -26,5 +32,16 @@ namespace NS {
         }
         m_outputs = activateFunctionLayer(temp);
         return m_outputs;
-    }
+    }gradiantLayer
+
+    std::vector<double> Layer::gradiantWeightsLayer(const std::vector<double> t_inputDerivate, const std::vector<double> t_inputDerivate, const int t_learningRate){
+
+        for(int k = 0; k < m_weights.size(); k++){
+            for(int l = 0; l < m_weights.size(); l++){
+                m_weights[k][l] -= t_learningRate*derivateLossFunction(m_outputs[k])*t_inputDerivate[k];
+            }
+        }
+        m_outputs = activateFunctionLayer(temp);
+        return m_outputs;
+    }gradiantLayer
 }

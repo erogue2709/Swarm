@@ -5,17 +5,29 @@
 
 namespace NS{
 
-    Network::Network(){};
+    Network::Network(NS::lossFunction m_lossFunction)
+    {
+        switch (m_lossFunction)
+        {
+        case crossEntropyLoss:
+            //TODO need update later
+            calculateError =  &NS::MSEFunction;
+            break;
+        case MSELoss:
+            calculateError =  &MSEFunction;
+            break;
+        }
+    };
 
     void Network::addLayer(const unsigned int t_numberOfInputs
-                , const unsigned int t_numberOfNeurons
+                , const unsigned int t_numberOfOutputs
                 , const activationType t_activationFunction)
     {
-        if(t_numberOfInputs == 0 || t_numberOfNeurons == 0){
+        if(t_numberOfInputs == 0 || t_numberOfOutputs == 0){
             std::cout << "Incorrect value, unable to add layer" << std::endl;
             return;
         }
-        m_networkLayers.push_back(new NS::Layer(t_numberOfInputs, t_numberOfNeurons, t_activationFunction));
+        m_networkLayers.push_back(new NS::Layer(t_numberOfInputs, t_numberOfOutputs, t_activationFunction));
     }
 
     unsigned int Network::lastLayerSize(){
@@ -42,10 +54,11 @@ namespace NS{
     }
 
     void Network::batchGDTrainning(std::vector<std::vector<double>> t_inputs
-            , std::vector<std::vector<double>> t_intendedOutputs) const{
+            , std::vector<std::vector<double>> t_targetOutputs) const{
         
-        std::vector<std::vector<double>> errors;
+        std::vector<std::vector<double>> error;
         std::vector<std::vector<double>> trainningOutputs;
+        std::vector<std::vector<double>> outputGrag;
 
         std::chrono::time_point beginningTime = std::chrono::steady_clock::now();
 
@@ -53,26 +66,15 @@ namespace NS{
             for(int k=0; k < t_inputs.size(); k++ ){
                 trainningOutputs.push_back(activateNetwork(t_inputs[k]));
             }
-            //errors = calculateError(trainningOutputs, t_intendedOutputs);
+            error = calculateError(trainningOutputs, t_targetOutputs);
+
+            outputGrag = t_targetOutputs;
+            for(int layerIdx = m_networkLayers.size(); layerIdx != 0; layerIdx--){
+                m_networkLayers[layerIdx]->gradiantWeightsLayer(outputGrag, m_learningRate)
+            }
             // for m_networkLayers do gradient descent
         }
     }
-
-    std::vector<double> Network::calculateError(
-            std::vector<std::vector<double>> t_trainningOutputs
-            , std::vector<std::vector<double>> t_intendedOutputs){
-        
-        switch (m_lossFunction)
-        {
-        case crossEntropyLoss:
-            //horrible why do i do that :'(
-            return NS::MSEFunction(t_trainningOutputs, t_intendedOutputs);
-        case MSELoss:
-            return MSEFunction(t_trainningOutputs,t_intendedOutputs);
-            break;
-        }
-    }
-        
 
     //need function to validate network (mse -> 1 output for regression else crossentropy for classification)
 

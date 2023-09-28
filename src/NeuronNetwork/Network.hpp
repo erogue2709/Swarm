@@ -11,12 +11,12 @@ namespace NS{
         private:
             const double m_learningRate = 0.015; 
             int m_trainningTime = 30; //do batchTrainning for m_trainningTime seconds
-            NS::lossFunction m_lossFunction = MSELoss;
             std::vector<Layer*> m_networkLayers;
+            std::vector<double> (*calculateError)(std::vector<std::vector<double>>, std::vector<std::vector<double>>);
         
         public:
-            Network();
-            //is virtual function for lossFunction better/faster
+
+            Network(NS::lossFunction m_lossFunction);
 
             void addLayer(const unsigned int t_numberOfInputs
                 , const unsigned int t_numberOfNeurons
@@ -37,9 +37,5 @@ namespace NS{
 
             void stochasticGDTrainning(std::vector<std::vector<double>> t_input
                     , std::vector<std::vector<double>> t_intendedOutput) const;
-
-            std::vector<double> calculateError(
-                std::vector<std::vector<double>> t_trainningOutputs
-            , std::vector<std::vector<double>> t_intendedOutputs);
     };
 }

@@ -2,17 +2,21 @@
 
 namespace NS {
 
-    std::vector<double> MSEFunction(const std::vector<std::vector<double>> outputs
-            , const std::vector<std::vector<double>> intendedOutputs){
-        
-        double sqrtSum = 0.0; //normalize to avoid overflow?
-        std::vector<double> meanSqrtSum;
-        
-        for(int k=0; k < outputs.size(); k++){
-            //Nope... need to loop every outputs for every neurons (1 in mse' case tho :/)
-            sqrtSum += (outputs[k][0]-intendedOutputs[k][0])*(outputs[k][0]-intendedOutputs[k][0]);
+    std::vector<double> MSEFunction(const std::vector<std::vector<double>> outputs, const std::vector<std::vector<double>> intendedOutputs){
+                
+        int intermediateSubtraction;
+        std::vector<double> meanSqrtSum (outputs[0].size(), 0.0);
+
+        for(int x=0; x < outputs.size(); x++){
+            for(int y=0; y < outputs[x].size(); y++){
+                intermediateSubtraction = outputs[x][y]-intendedOutputs[x][y];
+                sqrtSum[y] += intermediateSubtraction*intermediateSubtraction;
+            }
         }
-        meanSqrtSum.push_back(sqrtSum/outputs.size());
+
+        for(int k=0; k < meanSqrtSum[0].size(); k++){
+            sqrtSum[k] /= outputs.size();
+        }
 
         return meanSqrtSum;
     }
