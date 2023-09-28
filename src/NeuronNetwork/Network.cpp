@@ -53,7 +53,7 @@ namespace NS{
             for(int k=0; k < t_inputs.size(); k++ ){
                 trainningOutputs.push_back(activateNetwork(t_inputs[k]));
             }
-            errors = calculateError(trainningOutputs, t_intendedOutputs);
+            //errors = calculateError(trainningOutputs, t_intendedOutputs);
             // for m_networkLayers do gradient descent
         }
     }

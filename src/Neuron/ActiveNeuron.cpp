@@ -17,18 +17,6 @@ namespace NS {
         return meanSqrtSum;
     }
 
-    std::vector<double> activeFunction(const activationType function, const std::vector<double> input){
-        switch (function)
-        {
-        case functionSigmoidNeuron:
-            return functionSigmoid(input);
-        case functionReLuNeuron:
-            return functionReLu(input);
-            break;
-        }
-        return input;
-    }
-
     std::vector<double> functionSigmoid(const std::vector<double> input){
         std::vector<double> temp(input.size());
         for(int k=0; k < input.size(); k++){
@@ -43,18 +31,6 @@ namespace NS {
             temp[k] = (input[k]>=0)?input[k]:0.0;
         }
         return temp;
-    }
-
-    std::vector<double> derivateFunction(const activationType function, const std::vector<double> output){
-        switch (function)
-        {
-        case functionSigmoidNeuron:
-            return derivateSigmoid(output);
-        case functionReLuNeuron:
-            return derivateReLu(output);
-            break;
-        }
-        return output;
     }
 
     std::vector<double> derivateSigmoid(const std::vector<double> output){
